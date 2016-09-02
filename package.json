@@ -1,10 +1,7 @@
 {
   "name": "pocket2kindle",
   "version": "0.0.1",
-  "description": "Simple script that uses calibre to 
-    generate an ebook with the bookmarks stored in Pocket,
-    sends it to the specified kindle email adress 
-    and then archives all the sent bookmarks",
+  "description": "Simple script that uses calibre to generate an ebook with the bookmarks stored in Pocket, sends it to the specified kindle email adress and then archives all the sent bookmarks",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^2.0.0",
-    "request": "^2.74.0"
+    "request": "^2.74.0",
+    "winston": "^2.2.0"
   }
 }
