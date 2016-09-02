@@ -44,7 +44,7 @@ if (create_ebook){
 				+ ' --relay ' + process.env.SMTP_SERVER + ' --port ' + process.env.SMTP_PORT
 				+ ' --username ' + process.env.SMTP_USERNAME + ' --password '
 				+ process.env.SMTP_PASSWORD + ' --encryption-method ' + process.env.SMTP_ENCRYPT
-				+ ' --subject PocketToKindle ' + process.env.SMTP_FROM
+				+ ' --subject PocketToKindle ' + process.env.SMTP_USERNAME
 				+ ' ' + process.env.KINDLE_ADDRESS + ' PocketToKindle';
 
 			winston.log('debug', {  
@@ -129,7 +129,7 @@ if (create_ebook){
 							}
 						},function (err, httpResponse, body) {
 
-							if (err != null){
+							if (err != ''){
 								winston.log('error', {  
 									"Accesing Pocket Modify API": err
 								})
@@ -137,6 +137,9 @@ if (create_ebook){
 							}
 						});
 
+						winston.log('info', {  
+									"Everythin OK": "Exiting..."
+						})
 						process.exit();
 					});
 				}
