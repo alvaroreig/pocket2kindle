@@ -106,3 +106,9 @@ https://ifttt.com/recipes/102176-feeds-to-pocket
 Just set up a rule that maps your desired categories in Feedly with the corresponding tags in Pocket.
 
 If you use any other service to access your favorite sites, just look for a similar rule in IFTTT.
+
+## Changelog
+
+### 1.0
+
+* Initial version.
