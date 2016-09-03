@@ -3,7 +3,7 @@
 	- dotenv : Needed to load parameter values from .env
 	- winston: Needed for logging
 	- request: Needed to access the Pocket API
-	- exec: Needed to call Calibre
+	- child_process: Needed to call Calibre
 */
 
 require('dotenv').config();
