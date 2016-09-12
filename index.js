@@ -61,7 +61,7 @@ winston.log('info', {
 			"Archive in Pocket flag": archive_in_pocket
 });
 
-if (create_ebook){
+if (create_ebook == 'true'){
 	
 	var create_ebook_command = 'ebook-convert ' + process.env.CALIBRE_POCKETPLUS_RECIPE + 
 		' ' + process.env.CALIBRE_OUTPUT_FILE + ' --username ' + process.env.POCKET_USERNAME + 
@@ -92,7 +92,7 @@ if (create_ebook){
 			})
 		}
 
-		if (send_ebook_to_kindle){
+		if (send_ebook_to_kindle == 'true'){
 			
 			var send_ebook_command='calibre-smtp --attachment ' + process.env.CALIBRE_OUTPUT_FILE
 				+ ' --relay ' + process.env.SMTP_SERVER + ' --port ' + process.env.SMTP_PORT
@@ -126,7 +126,7 @@ if (create_ebook){
 					"Ebook sent": "OK"
 				})
 
-				if (archive_in_pocket){
+				if (archive_in_pocket == 'true'){
 
 					/**
 					Get bookmark list from Pocket
