@@ -163,6 +163,11 @@ If you use any other service to access your favorite sites, just look for a simi
 
 ## Changelog
 
+### 1.1.1
+
+* Docker support
+* Quiet dotenv
+
 ### 1.1.0
 
 * Included a parameter to specify the tags used in the ebook's creation process. These tags will overwrite the line 46 of the pocketplus.recipe file
