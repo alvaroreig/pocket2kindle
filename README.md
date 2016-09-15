@@ -1,5 +1,9 @@
 # pocket2kindle
 
+Simple script that uses calibre to generate an ebook with the bookmarks stored in Pocket, sends it to the specified (kindle) email address and then archives all the sent bookmarks.
+
+It is avalaible as a docker container, but you can download the code and run it anywhere.
+
 - [pocket2kindle](#pocket2kindle)
   * [What does it do](#what-does-it-do)
   * [Requirements](#requirements)
@@ -19,9 +23,6 @@
     + [1.1.0](#110)
     + [1.0](#10)
 
-Simple script that uses calibre to generate an ebook with the bookmarks stored in Pocket, sends it to the specified (kindle) email address and then archives all the sent bookmarks.
-
-It is avalaible as a docker container, but you can download the code and run it anywhere.
 
 ## What does it do
 
