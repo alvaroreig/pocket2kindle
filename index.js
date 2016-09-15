@@ -6,7 +6,7 @@ Dependencies:
 - child_process: Needed to call Calibre
 */
 
-require('dotenv').config();
+require('dotenv').config({silent: true});
 const winston = require('winston')
 var request = require('request');
 var exec = require('child_process').exec;
