@@ -11,6 +11,72 @@ const winston = require('winston')
 var request = require('request');
 var exec = require('child_process').exec;
 
+function createEbookWithPocketContent(callback){
+	/**
+	We have to replace the line 46 of the pocletplus.recipe file
+	with the tags specified by the user in the LIST_OF_TAGS parameter
+	*/
+	winston.log('info', {  
+		"List of tags": process.env.LIST_OF_TAGS
+	})
+
+	/**
+	Compose the sed command
+	*/
+	var replace_tags_command = 'sed -i "46s/.*/    tags = ' + process.env.LIST_OF_TAGS + 
+	'/" pocketplus.recipe';
+
+	winston.log('debug', {  
+		"Replace tags command": replace_tags_command
+	});
+
+	/**
+	Execute the seed command
+	*/
+	exec(replace_tags_command, function(error, stdout, stderr) {
+
+		if (stderr != ''){
+			winston.log('error', {  
+				"Replace tags output": stderr
+			});	
+		}
+				
+		var create_ebook_command = 'ebook-convert ' + process.env.CALIBRE_POCKETPLUS_RECIPE + 
+		' ' + process.env.CALIBRE_OUTPUT_FILE + ' --username ' + process.env.POCKET_USERNAME + 
+		' --password ' + process.env.POCKET_PASSWORD;
+
+		winston.log('debug', {  
+			"Create ebook command": create_ebook_command
+		})
+
+		winston.log('info', {  
+			"Starting ebook creation": "..."
+		})
+
+		exec(create_ebook_command, function(error, stdout, stderr) {
+
+			winston.log('debug', {  
+				"Create ebook output": stdout
+			})
+
+			if (stderr != ''){
+				winston.log('error', {  
+					"Creating ebook": stderr,
+					"Ending process":new Date()
+				});
+				process.exit(1);
+			}
+
+			winston.log('info', {  
+				"Finished ebook creation": "OK"
+			})
+
+			callback();
+		});
+
+	});
+}
+
 function sendEbookToKindle(callback){
 	var send_ebook_command='calibre-smtp --attachment ' + process.env.CALIBRE_OUTPUT_FILE
 				+ ' --relay ' + process.env.SMTP_SERVER + ' --port ' + process.env.SMTP_PORT
@@ -205,79 +271,20 @@ winston.log('info', {
 
 if (create_ebook == 'true'){
 
-	/**
-	We have to replace the line 46 of the pocletplus.recipe file
-	with the tags specified by the user in the LIST_OF_TAGS parameter
-	*/
-	winston.log('info', {  
-		"List of tags": process.env.LIST_OF_TAGS
-	})
-
-	/**
-	Compose the sed command
-	*/
-	var replace_tags_command = 'sed -i "46s/.*/    tags = ' + process.env.LIST_OF_TAGS + 
-	'/" pocketplus.recipe';
-
-	winston.log('debug', {  
-		"Replace tags command": replace_tags_command
-	});
-
-	/**
-	Execute the seed command
-	*/
-	exec(replace_tags_command, function(error, stdout, stderr) {
-
-		if (stderr != ''){
-			winston.log('error', {  
-				"Replace tags output": stderr
-			});	
+	createEbookWithPocketContent(function(){
+		if (send_ebook_to_kindle == 'true'){
+			sendEbookToKindle(function (){
+				if (archive_in_pocket == 'true'){
+					archiveInPocket();
+				} else {
+					winston.log('info', {
+						"Ending process":new Date()
+					});
+				}
+			})
 		}
-				
-		var create_ebook_command = 'ebook-convert ' + process.env.CALIBRE_POCKETPLUS_RECIPE + 
-		' ' + process.env.CALIBRE_OUTPUT_FILE + ' --username ' + process.env.POCKET_USERNAME + 
-		' --password ' + process.env.POCKET_PASSWORD;
-
-		winston.log('debug', {  
-			"Create ebook command": create_ebook_command
-		})
-
-		winston.log('info', {  
-			"Starting ebook creation": "..."
-		})
-
-		exec(create_ebook_command, function(error, stdout, stderr) {
-
-			winston.log('debug', {  
-				"Create ebook output": stdout
-			})
-
-			if (stderr != ''){
-				winston.log('error', {  
-					"Creating ebook": stderr,
-					"Ending process":new Date()
-				});
-				process.exit(1);
-			}
-
-			winston.log('info', {  
-				"Finished ebook creation": "OK"
-			})
-
-			if (send_ebook_to_kindle == 'true'){
-				sendEbookToKindle(function (){
-					if (archive_in_pocket == 'true'){
-						archiveInPocket();
-					} else {
-						winston.log('info', {
-							"Ending process":new Date()
-						});
-					}
-				})
-			}
-		});
-
 	});
+	
 }
 
 
