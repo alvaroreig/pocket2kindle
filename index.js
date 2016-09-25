@@ -11,6 +11,8 @@ const winston = require('winston')
 var request = require('request');
 var exec = require('child_process').exec;
 
+console.log("Starting process:" + new Date());
+
 /**
 If any required parameter is missing, abort
 */
@@ -43,7 +45,8 @@ if (
 	){
 		winston.log('error', {  
 			"At least one of the required parameters is missing": ".",
-			"Check .env file" : "."
+			"Check .env file" : ".",
+			"Ending process":new Date()
 		});
 		process.exit(1);
 }
@@ -113,7 +116,8 @@ if (create_ebook == 'true'){
 
 			if (stderr != ''){
 				winston.log('error', {  
-					"Creating ebook": stderr
+					"Creating ebook": stderr,
+					"Ending process":new Date()
 				});
 				process.exit(1);
 			}
@@ -147,8 +151,9 @@ if (create_ebook == 'true'){
 
 					if (stderr != ''){
 						winston.log('error', {  
-							"Sending email": stderr
-						})
+							"Sending email": stderr,
+							"Ending process":new Date()
+						});
 						process.exit(1);
 					}
 
@@ -182,8 +187,9 @@ if (create_ebook == 'true'){
 
 						if (err != null){
 							winston.log('error', {  
-								"Accesing Pocket Retrieve API": err
-							})
+								"Accesing Pocket Retrieve API": err,
+								"Ending process":new Date()
+							});
 							process.exit(1);
 						}
 
@@ -242,15 +248,21 @@ if (create_ebook == 'true'){
 
 							if (errModify != null){
 								winston.log('error', {  
-									"Accesing Pocket Modify API": errModify
+									"Accesing Pocket Modify API": errModify,
+									"Ending process":new Date()
 								})
 								process.exit(1);
 							}
 
 							winston.log('info', {  
-								"Pocket bookmarks archived": "OK"
-							})
+								"Pocket bookmarks archived": "OK",
+								"Ending process":new Date()
+							});
 						});
+					});
+				} else {
+					winston.log('info', {
+						"Ending process":new Date()
 					});
 				}
 			});
