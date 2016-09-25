@@ -1,3 +1,10 @@
+/**
+Dependencies:
+- dotenv : Needed to load parameter values from .env => already loaded
+- winston: Needed for logging
+- child_process: Needed to call Calibre
+*/
+
 const winston = require('winston');
 var exec = require('child_process').exec;
 

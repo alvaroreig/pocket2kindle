@@ -2,8 +2,6 @@
 Dependencies:
 - dotenv : Needed to load parameter values from .env
 - winston: Needed for logging
-- request: Needed to access the Pocket API
-- child_process: Needed to call Calibre
 */
 
 require('dotenv').config({silent: true});

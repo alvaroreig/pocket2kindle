@@ -1,3 +1,10 @@
+/**
+Dependencies:
+- dotenv : Needed to load parameter values from .env => already loaded
+- winston: Needed for logging
+- request: Needed to access the Pocket API
+*/
+
 const winston = require('winston');
 var request = require('request');
 
