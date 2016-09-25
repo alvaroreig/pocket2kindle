@@ -11,6 +11,44 @@ const winston = require('winston')
 var request = require('request');
 var exec = require('child_process').exec;
 
+function sendEbookToKindle(callback){
+	var send_ebook_command='calibre-smtp --attachment ' + process.env.CALIBRE_OUTPUT_FILE
+				+ ' --relay ' + process.env.SMTP_SERVER + ' --port ' + process.env.SMTP_PORT
+				+ ' --username ' + process.env.SMTP_USERNAME + ' --password '
+				+ process.env.SMTP_PASSWORD + ' --encryption-method ' + process.env.SMTP_ENCRYPT
+				+ ' --subject PocketToKindle ' + process.env.SMTP_USERNAME
+				+ ' ' + process.env.KINDLE_ADDRESS + ' PocketToKindle';
+
+				winston.log('debug', {  
+					"Send ebook command": send_ebook_command
+				})
+
+				winston.log('info', {  
+					"Sending ebook to kindle": "..."
+				});
+
+				exec(send_ebook_command, function(error, stdout, stderr) {
+
+					winston.log('debug', {  
+						"Send ebook output": stdout
+					})
+
+					if (stderr != ''){
+						winston.log('error', {  
+							"Sending email": stderr,
+							"Ending process":new Date()
+						});
+						process.exit(1);
+					}
+
+					winston.log('info', {  
+						"Ebook sent": "OK"
+					})
+
+					callback();
+			});
+}
+
 function archiveInPocket(){
 	/**
 	Get bookmark list from Pocket
@@ -227,40 +265,7 @@ if (create_ebook == 'true'){
 			})
 
 			if (send_ebook_to_kindle == 'true'){
-
-				var send_ebook_command='calibre-smtp --attachment ' + process.env.CALIBRE_OUTPUT_FILE
-				+ ' --relay ' + process.env.SMTP_SERVER + ' --port ' + process.env.SMTP_PORT
-				+ ' --username ' + process.env.SMTP_USERNAME + ' --password '
-				+ process.env.SMTP_PASSWORD + ' --encryption-method ' + process.env.SMTP_ENCRYPT
-				+ ' --subject PocketToKindle ' + process.env.SMTP_USERNAME
-				+ ' ' + process.env.KINDLE_ADDRESS + ' PocketToKindle';
-
-				winston.log('debug', {  
-					"Send ebook command": send_ebook_command
-				})
-
-				winston.log('info', {  
-					"Sending ebook to kindle": "..."
-				});
-
-				exec(send_ebook_command, function(error, stdout, stderr) {
-
-					winston.log('debug', {  
-						"Send ebook output": stdout
-					})
-
-					if (stderr != ''){
-						winston.log('error', {  
-							"Sending email": stderr,
-							"Ending process":new Date()
-						});
-						process.exit(1);
-					}
-
-					winston.log('info', {  
-						"Ebook sent": "OK"
-					})
-
+				sendEbookToKindle(function (){
 					if (archive_in_pocket == 'true'){
 						archiveInPocket();
 					} else {
@@ -268,7 +273,7 @@ if (create_ebook == 'true'){
 							"Ending process":new Date()
 						});
 					}
-			});
+				})
 			}
 		});
 
