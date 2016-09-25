@@ -64,17 +64,26 @@ http://www.jamesfmackenzie.com/getting-started-with-the-pocket-developer-api/
 Pocket2kindle is avalaible in DockerHub. Just download the .env-sample file (https://raw.githubusercontent.com/alvaroreig/pocket2kindle/master/.env-sample) , input your credentials and run the container:
 
 ```sh
-docker run --rm --env-file YOUR_ENV_FILE alvaroreig/pocket2kindle
+docker run --rm --env-file YOUR_ENV_FILE alvaroreig/pocket2kindle-arm
 ```
+
+The image has been built in a raspberry pi (ARM), but it works in an x64 system as well.
 
 The output will show you the progress:. With loglevel=info:
 ```sh
-info:  Create ebook flag=true, Send ebook flag=true, Archive in Pocket flag=false
-info:  List of tags=[\'TAG_1\',\'TAG_2\',...,\'TAG_N\']
+Starting process:Sun Sep 25 2016 16:58:22 GMT+0200 (CEST)
+info:  Create ebook flag=true, Send ebook flag=true, Archive in Pocket flag=true
+info:  List of tags=[\'Actualidad\',\'Expertos\',\'Cultura\',\'Deporte\',\'AAPP\',\'Tecnología\']
 info:  Starting ebook creation=...
 info:  Finished ebook creation=OK
 info:  Sending ebook to kindle=...
 info:  Ebook sent=OK
+info:  Getting bookmark list from Pocket=...
+info:  Pocket bookmarks retrieved=OK
+info:  Bookmarks retrieved=6
+info:  Archiving bookmark list in Pocket=...
+info:  Pocket bookmarks archived=OK, Ending process=Sun Sep 25 2016 16:58:52 GMT+0200 (CEST)
+
 ```
 
 ### Standalone
@@ -132,7 +141,7 @@ npm start
 Or directly call index.js:
 
 ```sh
-node $REPOSITORY_DIRECTORY/index.js
+node index.js
 ```
 
 If you want to receive your news every day, just set up a cronjob. In my raspberry pi the line is:
@@ -161,19 +170,3 @@ https://ifttt.com/recipes/102176-feeds-to-pocket
 Just set up a rule that maps your desired categories in Feedly with the corresponding tags in Pocket.
 
 If you use any other service to access your favorite sites, just look for a similar rule in IFTTT.
-
-## Changelog
-
-### 1.1.1
-
-* Docker support
-* Quiet dotenv
-
-### 1.1.0
-
-* Included a parameter to specify the tags used in the ebook's creation process. These tags will overwrite the line 46 of the pocketplus.recipe file
-* Small bugfixes
-
-### 1.0
-
-* Initial version.
