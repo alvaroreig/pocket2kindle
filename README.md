@@ -43,7 +43,7 @@ It has been tested in Docker and Linux (Ubuntu, Raspbian), but it should work in
 
 ### Docker requirements
 
-* Tested in Docker 1.12.1
+* Tested in Docker 17.04.0-ce, build 4845c56
 
 ### Standalone requirements
 
@@ -64,10 +64,8 @@ http://www.jamesfmackenzie.com/getting-started-with-the-pocket-developer-api/
 Pocket2kindle is avalaible in DockerHub. Just download the .env-sample file (https://raw.githubusercontent.com/alvaroreig/pocket2kindle/master/.env-sample) , input your credentials and run the container:
 
 ```sh
-docker run --rm --env-file YOUR_ENV_FILE alvaroreig/pocket2kindle-arm
+docker run --rm --env-file YOUR_ENV_FILE alvaroreig/pocket2kindle-amd64
 ```
-
-The image has been built in a raspberry pi (ARM), but it works in an x64 system as well.
 
 The output will show you the progress:. With loglevel=info:
 ```sh
@@ -111,16 +109,7 @@ cp .env-sample .env
 
 If you are sending the ebook to a kindle address, make sure that the email send-from address is in the approved list of your amazon account. Check https://www.amazon.com/gp/help/customer/display.html?nodeId=201974240
 
-Set your options in the pocketplus.recipe file, starting in line 39:
-
-    # Settings people change
-    max_articles_per_feed = 200
-    minimum_articles      = 1
-    mark_as_read_after_dl = False # Doesn't work sometimes, that's why we are calling Pocket API afterwards
-    sort_method           = 'newest'  # MUST be either 'oldest' or 'newest'
-    # To filter by tag this needs to be a single tag in quotes; IE 'calibre'
-    only_pull_tag         = None
-    tags =  ['Expertos','Cultura','Deporte', 'AAPP','Tecnología' ] #Name of your tags in Pocket
+Only set your options in the env file, do not modify the pocketplus.recipe file.
     
 Install the dependencies of the proyect
 
@@ -147,7 +136,7 @@ node index.js
 If you want to receive your news every day, just set up a cronjob. In my raspberry pi the line is:
 
     # Every day at 6 AM
-    00 6    * * *   /usr/local/bin/node /home/pi/scripts/pocket2kindle/index.js >> /home/pi/pocket.log
+    00 6  * * * /usr/bin/docker run --rm --env-file=MY_ENV_FILE alvaroreig/pocket2kindle-amd64 >> MYLOG.log 2>&1
 
 ## FAQ
 
@@ -170,3 +159,23 @@ https://ifttt.com/recipes/102176-feeds-to-pocket
 Just set up a rule that maps your desired categories in Feedly with the corresponding tags in Pocket.
 
 If you use any other service to access your favorite sites, just look for a similar rule in IFTTT.
+
+## Changelog
+### 1.2
+* Updating recipe to support multiple images per article.
+* Removing support for arm.
+### 1.1.2
+* Refactoring code, moving every block of functionality to helpers.
+* Adding timestamp.
+* Adding reference to docker image compiled in rpi.
+### 1.1.1
+* Docker support
+* Quiet dotenv
+
+### 1.1.0
+
+* Included a parameter to specify the tags used in the ebook's creation process. These tags will overwrite the line 46 of the pocketplus.recipe file
+* Small bugfixes
+### 1.0
+
+* First working release
