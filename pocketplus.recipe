@@ -19,32 +19,44 @@ __copyright__ = '''
 2010, Darko Miletic <darko.miletic at gmail.com>
 2011, Przemyslaw Kryger <pkryger at gmail.com>
 2012-2013, tBunnyMan <Wag That Tail At Me dot com>
-2015 Marcin Magnus <mag_dex at o2 pl>
+2013 Stefan Wagner <mail dot bompo at gmail dot com>
+2015-2017 Marcin Magnus <mag_dex at o2 pl>
 '''
+
+def get_date():
+    import datetime
+    format = "%a, %d %b %Y"
+    today = datetime.datetime.today()
+    s = today.strftime(format)
+    d = datetime.datetime.strptime(s, format)
+    return d.strftime(format)
 
 class Pocket(BasicNewsRecipe):
     title = 'Pocket+'
-    __author__ = 'Darko Miletic, Przemyslaw Kryger, Keith Callenberg, tBunnyMan, Marcin Magnus'
+    __author__ = 'Darko Miletic, Przemyslaw Kryger, Keith Callenberg, tBunnyMan, Stefan Wagner, Marcin Magnus'
     description = '''Personalized news feeds. Go to getpocket.com to setup up
                   your news. This version displays pages of articles from
                   oldest to newest, with max & minimum counts, and marks
                   articles read after downloading.
     
-                  Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! See for more https://github.com/m4rx9/ReadItLater-Calibre-Plugin
+                  Modified version of the plugin to get (1) The latest (more or less as the original version of the plugin) (2) and your content organized by tags! See for more https://github.com/mmagnus/Pocket-Plus-Calibre-Plugin'''
 
-'''
     publisher = 'getpocket.com'
     category = 'news, custom'
 
-    # Settings people change
+    # Settings people change ------------------------------------------------------
     max_articles_per_feed = 200
     minimum_articles      = 1
-    mark_as_read_after_dl = False
+    mark_as_read_after_dl = False  # Set this to False for testing
     sort_method           = 'newest'  # MUST be either 'oldest' or 'newest'
-    # To filter by tag this needs to be a single tag in quotes; IE 'calibre'
-    only_pull_tag         = None
-    tags =  ['Expertos','Cultura','Deporte', 'AAPP','Tecnología' ] # define your own tags, '' gives "The latest"!
-    
+    title_with_date       = True # if True Pocket+ [Tue, 02 May 2017]
+    to_pull               = 'unread' #'unread' # or 'unread' What articles to pull? unread only or all?
+    compress_news_images  = False # True gives compressed images
+    # '' gives "The latest"! e.g. ['','iphone'] to get The latest and articles tagged with `iphone`
+    # [''] to get only The latest
+    tags = ['']#
+    # Settings end -----------------------------------------------------------------
+
     # You don't want to change anything under
     no_stylesheets = True
     use_embedded_content = False
@@ -58,7 +70,10 @@ class Pocket(BasicNewsRecipe):
     articles = []
 
     encoding = 'utf8'
-    
+
+    # To filter by tag this needs to be a single tag in quotes; IE 'calibre'
+    only_pull_tag         = None
+
     def get_browser(self, *args, **kwargs):
         """
         We need to pretend to be a recent version of safari for the mac to
@@ -81,6 +96,8 @@ class Pocket(BasicNewsRecipe):
 
     def get_auth_uri(self):
         """Quick function to return the authentication part of the url"""
+        if self.title_with_date:
+            self.title = 'Pocket+ [' + get_date() + ']'
         uri = ""
         uri = u'{0}&apikey={1!s}'.format(uri, self.apikey)
         if self.username is None or self.password is None:
@@ -94,7 +111,7 @@ class Pocket(BasicNewsRecipe):
         """Get articles based on tag.
         """
         uri = ""
-        uri = u'{0}&state={1}'.format(uri, u'unread')#unread')
+        uri = u'{0}&state={1}'.format(uri, self.to_pull)        
         uri = u'{0}&contentType={1}'.format(uri, u'article')
         uri = u'{0}&sort={1}'.format(uri, self.sort_method)
         uri = u'{0}&tag={1}'.format(uri, tag)
@@ -172,19 +189,18 @@ class Pocket(BasicNewsRecipe):
         parsed by calibre.
         """
         article = self.get_textview(url)
+
         template = Template('<h2>$title</h2>\
                 <small><a href="$link">$link</a></small>\
-                $img\
                 <div class="body">$body</div>')
-        try:
-            image = '<img src="{0}" \>'.format(article['images']['1']['src'])
-        except:
-            image = ''
+        
+        for image in range(len(article['images'])):
+            article['article'] = article['article'].replace("<div id=\"RIL_IMG_" + str(image + 1) + "\" class=\"RIL_IMG\"></div>", "<img src=\"{0}\" \>".format(article['images'][str(image + 1)]['src']))
+        
         with tempfile.NamedTemporaryFile(delete=False) as tf:
             tf.write(template.safe_substitute(
                 title=article['title'],
                 link=article['resolvedUrl'],
-                img=image,
                 body=article['article'],
                 ))
         return tf.name

@@ -21,7 +21,7 @@ module.exports = {
 	/**
 	Compose the sed command
 	*/
-	var replace_tags_command = 'sed -i "46s/.*/    tags = ' + process.env.LIST_OF_TAGS + 
+	var replace_tags_command = 'sed -i "57s/.*/    tags = ' + process.env.LIST_OF_TAGS + 
 	'/" pocketplus.recipe';
 
 	winston.log('debug', {  
