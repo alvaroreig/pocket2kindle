@@ -161,6 +161,10 @@ Just set up a rule that maps your desired categories in Feedly with the correspo
 If you use any other service to access your favorite sites, just look for a similar rule in IFTTT.
 
 ## Changelog
+
+### 1.2.1
+* Forcing image compression due to gmail's size limit
+
 ### 1.2
 * Updating recipe to support multiple images per article.
 * Removing support for arm.

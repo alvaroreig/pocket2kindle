@@ -3,6 +3,11 @@
 FROM ubuntu
 MAINTAINER Alvaro Reig "alvaroreig@gmail.com"
 
+# For use while debugging
+#COPY ./ /pocket2kindle
+#docker build -f docker-amd64/Dockerfile . -t alvaroreig/pocket2kindle-amd64
+
+
 RUN \
   
   # Install dependencies.

@@ -51,7 +51,7 @@ class Pocket(BasicNewsRecipe):
     sort_method           = 'newest'  # MUST be either 'oldest' or 'newest'
     title_with_date       = True # if True Pocket+ [Tue, 02 May 2017]
     to_pull               = 'unread' #'unread' # or 'unread' What articles to pull? unread only or all?
-    compress_news_images  = False # True gives compressed images
+    compress_news_images  = True # True gives compressed images
     # '' gives "The latest"! e.g. ['','iphone'] to get The latest and articles tagged with `iphone`
     # [''] to get only The latest
     tags = ['']#
