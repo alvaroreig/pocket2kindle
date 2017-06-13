@@ -4,7 +4,5 @@ services:
 install:
   - docker build -f tools/docker-amd64/Dockerfile . -t alvaroreig/pocket2kindle-amd64-debug
 script:
-  - echo $PRUEBA
-  - echo $PRUEBA_PRIVADA
-  - echo $PRUEBA
   - docker images |grep pocket2kindle-amd64-debug
+  - docker run --rm alvaroreig/pocket2kindle-amd64-debug
