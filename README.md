@@ -1,5 +1,7 @@
 # pocket2kindle
 
+[![Build Status](https://travis-ci.org/alvaroreig/pocket2kindle.svg?branch=master)](https://travis-ci.org/alvaroreig/pocket2kindle)
+
 Simple script that uses calibre to generate an ebook with the bookmarks stored in Pocket, sends it to the specified (kindle) email address and then archives all the sent bookmarks.
 
 It is avalaible as a docker container, but you can download the code and run it anywhere.
