@@ -1,5 +1,7 @@
-language: node_js
+language: none
 services:
   - docker
 install:
   - docker build -f tools/docker-amd64/Dockerfile . -t alvaroreig/pocket2kindle-amd64-debug
+script:
+  - docker images |grep pocket2kindle-amd64-debug
