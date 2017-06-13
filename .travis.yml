@@ -6,4 +6,4 @@ install:
   - env >> .env-file-travis
 script:
   - docker images |grep pocket2kindle-amd64-debug
-  - docker run --rm --env-file=.env-file-travis alvaroreig/pocket2kindle-amd64-debug
+  - docker run --rm --env-file=.env-file-travis alvaroreig/pocket2kindle-amd64-debug | grep "creation=OK"
