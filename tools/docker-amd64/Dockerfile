@@ -4,8 +4,9 @@ FROM ubuntu
 MAINTAINER Alvaro Reig "alvaroreig@gmail.com"
 
 # For use while debugging
-#COPY ./ /pocket2kindle
-#docker build -f docker-amd64/Dockerfile . -t alvaroreig/pocket2kindle-amd64
+COPY ./ /pocket2kindle
+# Command for compiling images in local environment. Must cd to the root folder
+#docker build -f tools/docker-amd64/Dockerfile . -t alvaroreig/pocket2kindle-amd64-debug
 
 
 RUN \
@@ -20,8 +21,8 @@ RUN \
   apt-get install -y nodejs && \
 
   # Clone repository and install dependencies
-  git clone https://github.com/alvaroreig/pocket2kindle.git && \
-  cd pocket2kindle && \
+  #git clone https://github.com/alvaroreig/pocket2kindle.git && \
+  cd /pocket2kindle/src && \
   npm install && \
 
   # Cleaning up
@@ -30,4 +31,4 @@ RUN \
   rm -rf rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
   # Assuming that the env vars are passed on runtime, this command sends Pocket's content to Kindle.
-  ENTRYPOINT cd pocket2kindle && nodejs index.js
+  ENTRYPOINT cd /pocket2kindle/src && nodejs index.js
