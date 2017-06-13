@@ -97,14 +97,14 @@ sudo apt-get install calibre nodejs
 Clone the repository:
 
 ```sh
-git clone
+git clone https://github.com/alvaroreig/pocket2kindle.git
 ```
 
 Copy the sample .env file and fill in your values in your .env file:
 
 ```sh
 cd pocket2kindle
-cp .env-sample .env
+cp tools/.env-sample .env
 ```
 
 If you are sending the ebook to a kindle address, make sure that the email send-from address is in the approved list of your amazon account. Check https://www.amazon.com/gp/help/customer/display.html?nodeId=201974240
@@ -114,7 +114,7 @@ Only set your options in the env file, do not modify the pocketplus.recipe file.
 Install the dependencies of the proyect
 
 ```sh
-npm install
+cd src && npm install
 ```
 
 
@@ -124,13 +124,13 @@ npm install
 Inside the directory, execute:
 
 ```sh
-npm start
+cd src && npm start
 ```
 
 Or directly call index.js:
 
 ```sh
-node index.js
+cd src && node index.js
 ```
 
 If you want to receive your news every day, just set up a cronjob. In my raspberry pi the line is:
@@ -161,6 +161,10 @@ Just set up a rule that maps your desired categories in Feedly with the correspo
 If you use any other service to access your favorite sites, just look for a similar rule in IFTTT.
 
 ## Changelog
+
+### 1.2.2
+* New file structure
+* Travis CI integration
 
 ### 1.2.1
 * Forcing image compression due to gmail's size limit
