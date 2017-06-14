@@ -4,18 +4,19 @@
   "description": "Simple script that uses calibre to generate an ebook with the bookmarks stored in Pocket, sends it to the specified kindle email adress and then archives all the sent bookmarks",
   "main": "index.js",
   "scripts": {
-    "start" : "node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Álvaro Reig González",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^2.0.0",
+    "mailgun-js": "^0.11.2",
     "request": "^2.74.0",
     "winston": "^2.2.0"
   },
-  "repository" :
-  { "type" : "git"
-  , "url" : "https://github.com/alvaroreig/pocket2kindle.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alvaroreig/pocket2kindle.git"
   }
 }

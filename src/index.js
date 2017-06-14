@@ -10,6 +10,7 @@ const winston = require('winston');
 
 var pocket_api_helper = require('./pocket_api_helper');
 var calibre_helper = require('./calibre_helper');
+var mailgun_helper = require('./mailgun_helper');
 
 /**
 We don't have log access yet
@@ -40,9 +41,11 @@ if (
 	(process.env.SMTP_ENCRYPT == null) ||
 	(process.env.SMTP_USERNAME == null) ||
 	(process.env.SMTP_PASSWORD == null) ||
+	(process.env.MAILGUN_API_KEY == null) ||
+	(process.env.MAILGUN_DOMAIN == null) ||
 	(process.env.KINDLE_ADDRESS == null) ||
 	(process.env.CREATE_EBOOK == null) ||
-	(process.env.SEND_EBOOK == null) ||
+	(process.env.SEND_EBOOK_METHOD == null) ||
 	(process.env.ARCHIVE_BOOKMARKS == null) ||
 	(process.env.LIST_OF_TAGS == null) 
 	){
@@ -59,7 +62,7 @@ if (process.env.LOG_LEVEL == 'debug'){
 }
 
 var create_ebook=process.env.CREATE_EBOOK;
-var send_ebook_to_kindle=process.env.SEND_EBOOK;
+var send_ebook_to_kindle=process.env.SEND_EBOOK_METHOD;
 var archive_in_pocket=process.env.ARCHIVE_BOOKMARKS;
 
 winston.log('info', {  
@@ -70,8 +73,18 @@ winston.log('info', {
 
 if (create_ebook == 'true'){
 	calibre_helper.createEbookWithPocketContent(function(){
-		if (send_ebook_to_kindle == 'true'){
+		if (send_ebook_to_kindle == 'smtp'){
 			calibre_helper.sendEbookToKindle(function (){
+				if (archive_in_pocket == 'true'){
+					pocket_api_helper.archiveInPocket();
+				} else {
+					winston.log('info', {
+						"Ending process":new Date()
+					});
+				}
+			})
+		}else if(send_ebook_to_kindle == 'mailgun'){
+			mailgun_helper.sendEmail(function (){
 				if (archive_in_pocket == 'true'){
 					pocket_api_helper.archiveInPocket();
 				} else {
