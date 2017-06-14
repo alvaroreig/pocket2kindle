@@ -8,9 +8,9 @@ script:
   # Checking that the docker image exist
   - docker images |grep pocket2kindle-amd64-debug
   # Executing the software and storing the output
-  - docker run --rm --env-file=.env-file-travis alvaroreig/pocket2kindle-amd64-debug >> docker.output
-  - cat docker.output
+  - docker run --rm --env-file=.env-file-travis alvaroreig/pocket2kindle-amd64-debug
+  #- cat docker.output
   # Checking ebooks creation
-  - cat docker.output | grep "creation=OK"
+  #- cat docker.output | grep "creation=OK"
   # Checking that the email was sent
-  - cat docker.output | grep "sent=OK"
+  #- cat docker.output | grep "sent=OK"
