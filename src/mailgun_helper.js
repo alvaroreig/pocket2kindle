@@ -2,19 +2,19 @@
 Dependencies:
 - dotenv : Needed to load parameter values from .env => already loaded
 - winston: Needed for logging
+- malgun: self explanatory
 */
 
 const winston = require('winston');
-var api_key = process.env.MAILGUN_API_KEY
-var domain = process.env.MAILGUN_DOMAIN
-var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+
 
 module.exports = {
   sendEmail: function (callback){
-  	/**
-  	We have to replace the line 46 of the pocletplus.recipe file
-  	with the tags specified by the user in the LIST_OF_TAGS parameter
-  	*/
+    
+    var api_key = process.env.MAILGUN_API_KEY
+    var domain = process.env.MAILGUN_DOMAIN
+    var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+  	
 	  winston.log('info', {  
 		  "Sending email to...": process.env.KINDLE_ADDRESS
 	  })
