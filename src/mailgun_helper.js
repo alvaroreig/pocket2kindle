@@ -30,23 +30,23 @@ module.exports = {
     mailgun.messages().send(data, function (error, body) {
         
         winston.log('debug', {  
-						"Mailgun response": body
-				})
+			"Mailgun response": body
+		})
 
-				if (error != undefined){
-				  winston.log('error', {  
-					  "Sending email": error,
-						"Ending process":new Date()
-					});
-					process.exit(1);
-				}
+		if (error != undefined){
+			winston.log('error', {  
+				"Sending email": error,
+				"Ending process":new Date()
+			});
+			process.exit(1);
+		}
 
-				winston.log('info', {  
-				  "Ebook sent": "OK"
-				})
+		winston.log('info', {  
+			"Ebook sent": "OK"
+		})
+		
+		callback();
     });
 	
-	  callback();
-
   }
 };
