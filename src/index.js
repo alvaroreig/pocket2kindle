@@ -73,7 +73,7 @@ for (var i = 0; i < parameters_common.length; i++) {
 }
 
 // Checking mailgun parameters
-if (parameters_common[0].localeCompare('mailgun') == 0){
+if (parameters_common[0] == 'mailgun'){
 	for (var i = 0; i < parameters_mailgun.length; i++) {
 	  if (parameters_mailgun[i] == null){
 	  		winston.log('error', {  
