@@ -28,42 +28,43 @@ if ((process.env.LOG_LEVEL == null)){
 winston.level = process.env.LOG_LEVEL;
 
 var parameters_common = [
-	process.env.SEND_EBOOK_METHOD,
-	process.env.POCKET_API_URL_GET,
-	process.env.POCKET_API_URL_MODIFY,
-	process.env.POCKET_API_CONSUMER_KEY,
-	process.env.POCKET_API_ACCESS_TOKEN,
-	process.env.POCKET_USERNAME,
-	process.env.POCKET_PASSWORD,
-	process.env.CALIBRE_POCKETPLUS_RECIPE,
-	process.env.CALIBRE_OUTPUT_FILE,
-	process.env.KINDLE_ADDRESS,
-	process.env.CREATE_EBOOK,
-	process.env.ARCHIVE_BOOKMARKS,
-	process.env.LIST_OF_TAGS
-	
+	['SEND_EBOOK_METHOD',process.env.SEND_EBOOK_METHOD],
+	['POCKET_API_URL_GET',process.env.POCKET_API_URL_GET],
+	['POCKET_API_URL_MODIFY',process.env.POCKET_API_URL_MODIFY],
+	['POCKET_API_CONSUMER_KEY',process.env.POCKET_API_CONSUMER_KEY],
+	['POCKET_API_ACCESS_TOKEN',process.env.POCKET_API_ACCESS_TOKEN],
+	['POCKET_USERNAME',process.env.POCKET_USERNAME],
+	['POCKET_PASSWORD',process.env.POCKET_PASSWORD],
+	['CALIBRE_POCKETPLUS_RECIPE',process.env.CALIBRE_POCKETPLUS_RECIPE],
+	['CALIBRE_OUTPUT_FILE',process.env.CALIBRE_OUTPUT_FILE],
+	['KINDLE_ADDRESS',process.env.KINDLE_ADDRESS],
+	['CREATE_EBOOK',process.env.CREATE_EBOOK],
+	['ARCHIVE_BOOKMARKS',process.env.ARCHIVE_BOOKMARKS],
+	['LIST_OF_TAGS',process.env.LIST_OF_TAGS]
 ];
 
 var parameters_smtp = [
-	process.env.SMTP_SERVER,
-	process.env.SMTP_PORT,
-	process.env.SMTP_ENCRYPT,
-	process.env.SMTP_USERNAME,
-	process.env.SMTP_PASSWORD
+	['SMTP_SERVER',process.env.SMTP_SERVER],
+	['SMTP_PORT',process.env.SMTP_PORT],
+	['SMTP_ENCRYPT',process.env.SMTP_ENCRYPT],
+	['SMTP_USERNAME',process.env.SMTP_USERNAME],
+	['SMTP_PASSWORD',process.env.SMTP_PASSWORD]
 ];
 
 var parameters_mailgun = [
-	process.env.MAILGUN_API_KEY,
-	process.env.MAILGUN_DOMAIN,
-	process.env.MAILGUN_FROM_ADDRESS
+	['MAILGUN_API_KEY',process.env.MAILGUN_API_KEY],
+	['MAILGUN_DOMAIN',process.env.MAILGUN_DOMAIN],
+	['MAILGUN_FROM_ADDRESS',process.env.MAILGUN_FROM_ADDRESS]
 ];
 
 // Checking common parameters
 for (var i = 0; i < parameters_common.length; i++) {
-  if (parameters_common[i] == null){
+	//parameters_common[i][1] contains the value
+	//parameters_common[i][0] contains the parameter name
+  if (parameters_common[i][1] == null){
   		winston.log('error', {  
 			"At least one of the common parameters is missing": ".",
-			"Parameter position" : i,
+			"Parameter missing" : parameters_common[i][0],
 			"Check .env file" : ".",
 			"Ending process":new Date()
 		});
@@ -73,12 +74,12 @@ for (var i = 0; i < parameters_common.length; i++) {
 }
 
 // Checking mailgun parameters
-if (parameters_common[0] == 'mailgun'){
+if (parameters_common[0][1] == 'mailgun'){
 	for (var i = 0; i < parameters_mailgun.length; i++) {
-	  if (parameters_mailgun[i] == null){
+	  if (parameters_mailgun[i][1] == null){
 	  		winston.log('error', {  
 				"At least one of the mailgun parameters is missing": ".",
-				"Parameter position" : i,
+				"Parameter missing" : parameters_mailgun[i][0],
 				"Check .env file" : ".",
 				"Ending process":new Date()
 			});
@@ -89,12 +90,12 @@ if (parameters_common[0] == 'mailgun'){
 }
 
 // Checking smtp parameters
-if (parameters_common[0] == 'smtp'){
+if (parameters_common[0][1] == 'smtp'){
 	for (var i = 0; i < parameters_smtp.length; i++) {
-	  if (parameters_smtp[i] == null){
+	  if (parameters_smtp[i][1] == null){
 	  		winston.log('error', {  
 				"At least one of the smtp parameters is missing": ".",
-				"Parameter position" : i,
+				"Parameter missing" : parameters_smtp[i][0],
 				"Check .env file" : ".",
 				"Ending process":new Date()
 			});
