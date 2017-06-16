@@ -27,35 +27,83 @@ if ((process.env.LOG_LEVEL == null)){
 
 winston.level = process.env.LOG_LEVEL;
 
-if (
-	(process.env.POCKET_API_URL_GET == null) ||
-	(process.env.POCKET_API_URL_MODIFY == null) ||
-	(process.env.POCKET_API_CONSUMER_KEY == null) ||
-	(process.env.POCKET_API_ACCESS_TOKEN == null) ||
-	(process.env.POCKET_USERNAME == null) ||
-	(process.env.POCKET_PASSWORD == null) ||
-	(process.env.CALIBRE_POCKETPLUS_RECIPE == null) ||
-	(process.env.CALIBRE_OUTPUT_FILE == null) ||
-	(process.env.SMTP_SERVER == null) ||
-	(process.env.SMTP_PORT == null) ||
-	(process.env.SMTP_ENCRYPT == null) ||
-	(process.env.SMTP_USERNAME == null) ||
-	(process.env.SMTP_PASSWORD == null) ||
-	(process.env.MAILGUN_API_KEY == null) ||
-	(process.env.MAILGUN_DOMAIN == null) ||
-	(process.env.KINDLE_ADDRESS == null) ||
-	(process.env.CREATE_EBOOK == null) ||
-	(process.env.SEND_EBOOK_METHOD == null) ||
-	(process.env.ARCHIVE_BOOKMARKS == null) ||
-	(process.env.LIST_OF_TAGS == null) 
-	){
-		winston.log('error', {  
-			"At least one of the required parameters is missing": ".",
+var parameters_common = [
+	process.env.SEND_EBOOK_METHOD,
+	process.env.POCKET_API_URL_GET,
+	process.env.POCKET_API_URL_MODIFY,
+	process.env.POCKET_API_CONSUMER_KEY,
+	process.env.POCKET_API_ACCESS_TOKEN,
+	process.env.POCKET_USERNAME,
+	process.env.POCKET_PASSWORD,
+	process.env.CALIBRE_POCKETPLUS_RECIPE,
+	process.env.CALIBRE_OUTPUT_FILE,
+	process.env.KINDLE_ADDRESS,
+	process.env.CREATE_EBOOK,
+	process.env.ARCHIVE_BOOKMARKS,
+	process.env.LIST_OF_TAGS
+	
+];
+
+var parameters_smtp = [
+	process.env.SMTP_SERVER,
+	process.env.SMTP_PORT,
+	process.env.SMTP_ENCRYPT,
+	process.env.SMTP_USERNAME,
+	process.env.SMTP_PASSWORD
+];
+
+var parameters_mailgun = [
+	process.env.MAILGUN_API_KEY,
+	process.env.MAILGUN_DOMAIN,
+	process.env.MAILGUN_FROM_ADDRESS
+];
+
+// Checking common parameters
+for (var i = 0; i < parameters_common.length; i++) {
+  if (parameters_common[i] == null){
+  		winston.log('error', {  
+			"At least one of the common parameters is missing": ".",
+			"Parameter position" : i,
 			"Check .env file" : ".",
 			"Ending process":new Date()
 		});
 		process.exit(1);
+  	
+  }
 }
+
+// Checking mailgun parameters
+if (parameters_common[0].localeCompare('mailgun') == 0){
+	for (var i = 0; i < parameters_mailgun.length; i++) {
+	  if (parameters_mailgun[i] == null){
+	  		winston.log('error', {  
+				"At least one of the mailgun parameters is missing": ".",
+				"Parameter position" : i,
+				"Check .env file" : ".",
+				"Ending process":new Date()
+			});
+			process.exit(1);
+	  	
+	  }
+	}
+}
+
+// Checking smtp parameters
+if (parameters_common[0] == 'smtp'){
+	for (var i = 0; i < parameters_smtp.length; i++) {
+	  if (parameters_smtp[i] == null){
+	  		winston.log('error', {  
+				"At least one of the smtp parameters is missing": ".",
+				"Parameter position" : i,
+				"Check .env file" : ".",
+				"Ending process":new Date()
+			});
+			process.exit(1);
+	  	
+	  }
+	}
+}
+
 
 if (process.env.LOG_LEVEL == 'debug'){
 	require('request').debug = true;
