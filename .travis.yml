@@ -5,5 +5,12 @@ install:
   - docker build -f tools/docker-amd64/Dockerfile . -t alvaroreig/pocket2kindle-amd64-debug
   - env >> .env-file-travis
 script:
+  # Checking that the docker image exist
   - docker images |grep pocket2kindle-amd64-debug
-  - docker run --rm --env-file=.env-file-travis alvaroreig/pocket2kindle-amd64-debug | grep "creation=OK"
+  # Executing the software and storing the output
+  - docker run --rm --env-file=.env-file-travis alvaroreig/pocket2kindle-amd64-debug >> output.log 2>&1
+  - cat output.log
+  # Checking ebooks creation
+  - cat output.log | grep "creation=OK"
+  # Checking that the email was sent
+  - cat output.log | grep "sent=OK"

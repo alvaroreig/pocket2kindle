@@ -22,8 +22,6 @@ It is avalaible as a docker container, but you can download the code and run it 
     + [I have noticed that the Pocketplus recipe already archives the bookmarks after creating the ebook, why the API calls?](#i-have-noticed-that-the-pocketplus-recipe-already-archives-the-bookmarks-after-creating-the-ebook--why-the-api-calls-)
     + [I am a Feedly user, will you provide a Feedly2Kindle version?](#i-am-a-feedly-user--will-you-provide-a-feedly2kindle-version-)
   * [Changelog](#changelog)
-    + [1.1.0](#110)
-    + [1.0](#10)
 
 
 ## What does it do
@@ -163,6 +161,10 @@ Just set up a rule that maps your desired categories in Feedly with the correspo
 If you use any other service to access your favorite sites, just look for a similar rule in IFTTT.
 
 ## Changelog
+
+### 1.3
+* Mailgun integration
+* More information if a parameter is missing
 
 ### 1.2.2
 * New file structure
