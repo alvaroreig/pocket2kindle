@@ -4,7 +4,7 @@ FROM ubuntu
 MAINTAINER Alvaro Reig "alvaroreig@gmail.com"
 
 # For use while debugging
-COPY ./ /pocket2kindle
+#ADD ./ /pocket2kindle
 # Command for compiling images in local environment. Must cd to the root folder
 #docker build -f tools/docker-amd64/Dockerfile . -t alvaroreig/pocket2kindle-amd64-debug
 
@@ -21,9 +21,9 @@ RUN \
   apt-get install -y nodejs && \
 
   # Clone repository and install dependencies
-  #git clone https://github.com/alvaroreig/pocket2kindle.git && \
-  cd /pocket2kindle/src && \
-  npm install && \
+  git clone https://github.com/alvaroreig/pocket2kindle.git && \
+
+  cd /pocket2kindle/src && npm install && \
 
   # Cleaning up
   apt-get remove -y git curl && apt-get -y autoremove && apt-get clean && \ 
