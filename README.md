@@ -29,7 +29,7 @@ It is avalaible as a docker container, but you can download the code and run it 
 This script:
 
 * Uses Calibre to connect to your Pocket account and build an ebook with your news
-* Uses Calibre to connect to an email server and send the ebook to your email.
+* Uses Calibre to connect to an email server (Mailgun or any SMTP server) and send the ebook to your email.
 * Uses the Pocket API to archive all the items
 
 It has been tested in Docker and Linux (Ubuntu, Raspbian), but it should work in other operating systems.
@@ -38,7 +38,7 @@ It has been tested in Docker and Linux (Ubuntu, Raspbian), but it should work in
 
 * A Pocket account
 * A Pocket CONSUMER_KEY and a valid ACCESS_TOKEN. Check 'Getting access to Pocket API' section.
-* An email account accessible using SMTP. Gmail is OK.
+* A mailgun account or an SMTP email account. I don't recommend using gmail.
 * An email address to receive the ebook, if you have a kindle it will be downloaded OTA.
 
 ### Docker requirements
