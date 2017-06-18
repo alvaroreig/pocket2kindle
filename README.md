@@ -162,6 +162,10 @@ If you use any other service to access your favorite sites, just look for a simi
 
 ## Changelog
 
+### 1.3.1
+* Mocha testing.
+* Coveralls integration (19% so far)
+
 ### 1.3
 * Mailgun integration
 * More information if a parameter is missing
