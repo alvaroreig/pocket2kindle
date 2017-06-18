@@ -28,7 +28,7 @@ describe('mailgun_helper.js', function(){
 
 describe('calibre_helper.js', function(){
   it('should create an ebbok using createEbookWithPocketContent(callback()', function(done){
-    this.timeout(10000);
+    this.timeout(20000);
     calibre_helper.createEbookWithPocketContent(function(status){
 		  assert.equal(status,0);
       done();
