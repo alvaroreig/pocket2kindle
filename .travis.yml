@@ -2,6 +2,7 @@ language: none
 services:
   - docker
 install:
+  - sudo apt-get install --no-install-recommends -y calibre ca-certificates
   - docker build -f tools/docker-amd64/Dockerfile . -t alvaroreig/pocket2kindle-amd64-debug
   - env >> .env-file-travis
 script:
