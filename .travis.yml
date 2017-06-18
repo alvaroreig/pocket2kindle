@@ -16,7 +16,7 @@ script:
   - cat output.log | grep "sent=OK"
   # Installing dev dependencies
   - cd /home/travis/build/alvaroreig/pocket2kindle/src
-  - npm install --only=dev
+  - npm install
   - npm install -g coveralls
   # Running full tests and sending results to coveralls
   - npm run before_test
