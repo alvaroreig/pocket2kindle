@@ -122,7 +122,12 @@ winston.log('info', {
 
 if (create_ebook == 'true'){
 	calibre_helper.createEbookWithPocketContent(
-		function(){
+		function(status){
+		
+			if (status != 0){
+				process.exit(1);
+			}
+			
 		if (send_ebook_to_kindle == 'smtp'){
 			calibre_helper.sendEbookToKindle(function (){
 				if (archive_in_pocket == 'true'){
@@ -143,7 +148,12 @@ if (create_ebook == 'true'){
       	attachment: process.env.CALIBRE_OUTPUT_FILE
     	};
     
-			mailgun_helper.sendEmail(data,function (){
+			mailgun_helper.sendEmail(data,function (status){
+				
+				if (status != 0){
+					process.exit(1);
+				}
+				
 				if (archive_in_pocket == 'true'){
 					pocket_api_helper.archiveInPocket();
 				} else {

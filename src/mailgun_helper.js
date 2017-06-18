@@ -29,14 +29,14 @@ module.exports = {
 				"Sending email": error,
 				"Ending process":new Date()
 			});
-			process.exit(1);
+			callback(-1);
 		}
 
 		winston.log('info', {  
 			"Ebook sent": "OK"
 		})
 		
-		callback();
+		callback(0);
     });
 	
   }

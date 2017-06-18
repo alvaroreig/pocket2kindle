@@ -62,14 +62,14 @@ module.exports = {
 					"Creating ebook": stderr,
 					"Ending process":new Date()
 				});
-				process.exit(1);
+				callback(-1);
 			}
 
 			winston.log('info', {  
 				"Finished ebook creation": "OK"
 			})
 
-			callback();
+			callback(0);
 		});
 
 	});
@@ -101,14 +101,14 @@ module.exports = {
 							"Sending email": stderr,
 							"Ending process":new Date()
 						});
-						process.exit(1);
+						callback(-1);
 					}
 
 					winston.log('info', {  
 						"Ebook sent": "OK"
 					})
 
-					callback();
+					callback(0);
 			});
 }
 };
