@@ -7,7 +7,7 @@
     "start": "node index.js",
     "before_test": "ln -s node_modules ../test/node_modules",
     "test": "mocha ../test/ ",
-    "cover": "istanbul --include-all-sources --report-dir=../test cove _mocha ../test && mv coverage ../test"
+    "cover": "istanbul --include-all-sources --report-dir=../test cove _mocha ../test && cp -r coverage ../test && rm -rf coverage"
   },
   "author": "Álvaro Reig González",
   "license": "MIT",
