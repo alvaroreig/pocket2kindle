@@ -9,27 +9,18 @@ const winston = require('winston');
 
 
 module.exports = {
-  sendEmail: function (callback){
+  sendEmail: function (data,callback){
     
     var api_key = process.env.MAILGUN_API_KEY
     var domain = process.env.MAILGUN_DOMAIN
     var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
   	
-	  winston.log('info', {  
-		  "Sending email to...": process.env.KINDLE_ADDRESS
-	  })
-	
-	  var data = {
-      from: process.env.MAILGUN_FROM_ADDRESS,
-      to: process.env.KINDLE_ADDRESS,
-      subject: 'Your pocket news',
-      text: 'Sending your news to your kindle',
-      attachment: process.env.CALIBRE_OUTPUT_FILE
-    };
- 
+		winston.log('info', {  
+			"Sending email to...": process.env.KINDLE_ADDRESS
+		})
+
     mailgun.messages().send(data, function (error, body) {
-        
-        winston.log('debug', {  
+    	winston.log('debug', {  
 			"Mailgun response": body
 		})
 
@@ -38,14 +29,14 @@ module.exports = {
 				"Sending email": error,
 				"Ending process":new Date()
 			});
-			process.exit(1);
+			callback(-1);
 		}
 
 		winston.log('info', {  
 			"Ebook sent": "OK"
 		})
 		
-		callback();
+		callback(0);
     });
 	
   }

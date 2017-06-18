@@ -1,10 +1,14 @@
-language: none
+language: node_js
+node_js:
+  - "6"
 services:
   - docker
 install:
+  - sudo apt-get install --no-install-recommends -y calibre ca-certificates
   - docker build -f tools/docker-amd64/Dockerfile . -t alvaroreig/pocket2kindle-amd64-debug
   - env >> .env-file-travis
 script:
+  ###### DOCKER CONTAINER TEST ##############
   # Checking that the docker image exist
   - docker images |grep pocket2kindle-amd64-debug
   # Executing the software and storing the output
@@ -14,3 +18,12 @@ script:
   - cat output.log | grep "creation=OK"
   # Checking that the email was sent
   - cat output.log | grep "sent=OK"
+  ###### MOCHA TESTS ##############
+  # Installing dev dependencies
+  - cd /home/travis/build/alvaroreig/pocket2kindle/src
+  - npm install
+  - npm install -g coveralls
+  # Running full tests and sending results to coveralls
+  - npm run before_test
+  - cd /home/travis/build/alvaroreig/pocket2kindle/src
+  - npm run coveralls

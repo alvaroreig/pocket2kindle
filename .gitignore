@@ -38,3 +38,6 @@ jspm_packages
 
 # ENV file
 .env
+
+# Converalls config
+.coveralls.yml

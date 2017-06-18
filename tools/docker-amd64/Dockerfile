@@ -7,7 +7,7 @@ MAINTAINER Alvaro Reig "alvaroreig@gmail.com"
 #ADD ./ /pocket2kindle
 # Command for compiling images in local environment. Must cd to the root folder
 #docker build -f tools/docker-amd64/Dockerfile . -t alvaroreig/pocket2kindle-amd64-debug
-
+#docker run -it --rm -v $MY_DIR:/p2k --entrypoint=/bin/bash alvaroreig/pocket2kindle-amd64-debug
 
 RUN \
   
