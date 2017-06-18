@@ -121,7 +121,8 @@ winston.log('info', {
 });
 
 if (create_ebook == 'true'){
-	calibre_helper.createEbookWithPocketContent(function(){
+	calibre_helper.createEbookWithPocketContent(
+		function(){
 		if (send_ebook_to_kindle == 'smtp'){
 			calibre_helper.sendEbookToKindle(function (){
 				if (archive_in_pocket == 'true'){
@@ -133,7 +134,16 @@ if (create_ebook == 'true'){
 				}
 			})
 		}else if(send_ebook_to_kindle == 'mailgun'){
-			mailgun_helper.sendEmail(function (){
+			
+			var data = {
+      	from: process.env.MAILGUN_FROM_ADDRESS,
+      	to: process.env.KINDLE_ADDRESS,
+      	subject: 'Your pocket news',
+      	text: 'Sending your news to your kindle',
+      	attachment: process.env.CALIBRE_OUTPUT_FILE
+    	};
+    
+			mailgun_helper.sendEmail(data,function (){
 				if (archive_in_pocket == 'true'){
 					pocket_api_helper.archiveInPocket();
 				} else {
