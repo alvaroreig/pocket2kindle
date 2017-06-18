@@ -15,8 +15,10 @@ script:
   # Checking that the email was sent
   - cat output.log | grep "sent=OK"
   # Installing dev dependencies
-  - cd src
+  - cd /home/travis/build/alvaroreig/pocket2kindle/src
   - npm install --only=dev
   - npm install -g coveralls
   # Running full tests and sending results to coveralls
-  - npm run before_test && npm run coveralls
+  - npm run before_test
+  - cd /home/travis/build/alvaroreig/pocket2kindle/src
+  - npm run coveralls
