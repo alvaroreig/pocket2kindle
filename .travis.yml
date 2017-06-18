@@ -15,4 +15,4 @@ script:
   # Checking that the email was sent
   - cat output.log | grep "sent=OK"
   # Running full tests and sending results to coveralls
-  - npm run coveralls
+  - cd src && npm run before_test && npm run coveralls
