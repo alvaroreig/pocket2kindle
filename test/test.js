@@ -6,9 +6,6 @@ winston.level = process.env.TEST_LOG_LEVEL;
 var mailgun_helper = require('../src/mailgun_helper');
 var calibre_helper = require('../src/calibre_helper');
 
-
-
-
 describe('mailgun_helper.js', function(){
   it('should send an email using sendEmail(data,callback()', function(done){
     

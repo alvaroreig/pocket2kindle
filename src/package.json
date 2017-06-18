@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "before_test": "ln -s node_modules ../test/node_modules",
+    "before_test": "cd ../test && ln -s ../src/node_modules .",
     "test": "mocha ../test/ ",
     "cover": "istanbul --include-all-sources cover _mocha ../test",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
