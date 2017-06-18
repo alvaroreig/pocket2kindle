@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "before_test" : "ln -s node_modules ../test/node_modules",
-    "test": "mocha ../test/ "
+    "before_test": "ln -s node_modules ../test/node_modules",
+    "test": "mocha ../test/ ",
+    "cover": "istanbul --include-all-sources --report-dir=../test cove _mocha ../test && mv coverage ../test"
   },
   "author": "Álvaro Reig González",
   "license": "MIT",
@@ -19,5 +20,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/alvaroreig/pocket2kindle.git"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.2"
   }
 }
