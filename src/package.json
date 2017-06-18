@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "before_test" : "ln -s node_modules ../test/node_modules",
+    "test": "mocha ../test/ "
   },
   "author": "Álvaro Reig González",
   "license": "MIT",
