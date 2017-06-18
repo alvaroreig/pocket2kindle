@@ -16,6 +16,6 @@ script:
   - cat output.log | grep "sent=OK"
   # Installing dev dependencies
   - cd src && npm install --only=dev
-  - npm install -g coveralls
+  - cd src && npm install -g coveralls
   # Running full tests and sending results to coveralls
   - cd src && npm run before_test && npm run coveralls
