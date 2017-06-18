@@ -14,5 +14,8 @@ script:
   - cat output.log | grep "creation=OK"
   # Checking that the email was sent
   - cat output.log | grep "sent=OK"
+  # Installing dev dependencies
+  - npm install --dev
+  - npm install -g coveralls
   # Running full tests and sending results to coveralls
   - cd src && npm run before_test && npm run coveralls
