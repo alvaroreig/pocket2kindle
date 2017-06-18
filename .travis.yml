@@ -14,5 +14,3 @@ script:
   - cat output.log | grep "creation=OK"
   # Checking that the email was sent
   - cat output.log | grep "sent=OK"
-after_success:
-- npm run coveralls
