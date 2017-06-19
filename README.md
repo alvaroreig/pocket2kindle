@@ -1,6 +1,6 @@
 # pocket2kindle
 
-[![Build Status](https://travis-ci.org/alvaroreig/pocket2kindle.svg?branch=master)](https://travis-ci.org/alvaroreig/pocket2kindle) [![Coverage Status](https://coveralls.io/repos/github/alvaroreig/pocket2kindle/badge.svg?branch=master)](https://coveralls.io/github/alvaroreig/pocket2kindle?branch=master)
+[![Build Status](https://travis-ci.org/alvaroreig/pocket2kindle.svg?branch=master)](https://travis-ci.org/alvaroreig/pocket2kindle) [![Coverage Status](http://coveralls.io/repos/github/alvaroreig/pocket2kindle/badge.svg?branch=master)](https://coveralls.io/github/alvaroreig/pocket2kindle?branch=master)
 
 Simple script that uses calibre to generate an ebook with the bookmarks stored in Pocket, sends it to the specified (kindle) email address and then archives all the sent bookmarks.
 
@@ -17,11 +17,18 @@ It is avalaible as a docker container, but you can download the code and run it 
     + [Standalone](#standalone)
       - [Installation](#installation)
       - [Execution](#execution)
+  * [Infraestructure](#infraestructure)
+    + [Automated testing](#automated-testing)
+    + [Continuous integration](#continuous-integration)
+    + [Coverall information and badge](#coverall-information-and-badge)
   * [FAQ](#faq)
     + [Why do I have to provide Pocket's username/password AND the API keys?](#why-do-i-have-to-provide-pocket-s-username-password-and-the-api-keys-)
     + [I have noticed that the Pocketplus recipe already archives the bookmarks after creating the ebook, why the API calls?](#i-have-noticed-that-the-pocketplus-recipe-already-archives-the-bookmarks-after-creating-the-ebook--why-the-api-calls-)
     + [I am a Feedly user, will you provide a Feedly2Kindle version?](#i-am-a-feedly-user--will-you-provide-a-feedly2kindle-version-)
   * [Changelog](#changelog)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 
 ## What does it do
@@ -84,6 +91,11 @@ info:  Pocket bookmarks archived=OK, Ending process=Sun Sep 25 2016 16:58:52 GMT
 
 ```
 
+If you want to receive your news every day, just set up a cronjob. In my raspberry pi the line is:
+
+    # Every day at 6 AM
+    00 6  * * * /usr/bin/docker run --rm --env-file=MY_ENV_FILE alvaroreig/pocket2kindle-amd64 >> MYLOG.log 2>&1
+
 ### Standalone
 
 #### Installation
@@ -103,7 +115,7 @@ git clone https://github.com/alvaroreig/pocket2kindle.git
 Copy the sample .env file and fill in your values in your .env file:
 
 ```sh
-cd pocket2kindle
+cd pocket2kindle/src
 cp tools/.env-sample .env
 ```
 
@@ -116,8 +128,6 @@ Install the dependencies of the proyect
 ```sh
 cd src && npm install
 ```
-
-
 
 #### Execution
 
@@ -133,10 +143,24 @@ Or directly call index.js:
 cd src && node index.js
 ```
 
-If you want to receive your news every day, just set up a cronjob. In my raspberry pi the line is:
+## Infraestructure
 
-    # Every day at 6 AM
-    00 6  * * * /usr/bin/docker run --rm --env-file=MY_ENV_FILE alvaroreig/pocket2kindle-amd64 >> MYLOG.log 2>&1
+### Automated testing
+This software has (some) automated testing using Mocha. They are located in /test/test.js:
+
+* https://github.com/alvaroreig/pocket2kindle/blob/master/test/test.js
+
+### Continuous integration
+With every commit, pocket2kindle is tested and deployed in Travis Ci and Docker Hub:
+
+* https://travis-ci.org/alvaroreig/pocket2kindle
+* https://hub.docker.com/r/alvaroreig/pocket2kindle-amd64/
+
+### Coverall information and badge
+
+Testing coverage information is provided using Istambul and Coveralls:
+
+* https://coveralls.io/github/alvaroreig/pocket2kindle?branch=master
 
 ## FAQ
 

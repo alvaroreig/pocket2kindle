@@ -19,8 +19,8 @@ describe('mailgun_helper.js', function(){
   	};
   	
     mailgun_helper.sendEmail(data,function(status){
-        assert.equal(status,0);
-        done();
+      assert.equal(status,0);
+      done();
     });
   })
 });
@@ -29,9 +29,9 @@ describe('calibre_helper.js', function(){
   it('should create an ebbok using createEbookWithPocketContent(callback()', function(done){
     this.timeout(20000);
     calibre_helper.createEbookWithPocketContent(function(status){
-		  assert.equal(status,0);
+      assert.equal(status,0);
       done();
-		});
+    });
   })
 });
 
@@ -39,15 +39,15 @@ describe('pocket_api_helper.js', function(){
   it('should archive every item using archiveInPocket(consumer_key,access_token)', function(done){
     this.timeout(20000);
     pocket_api_helper.archiveInPocket(process.env.TEST_POCKET_API_CONSUMER_KEY,process.env.TEST_POCKET_API_ACCESS_TOKEN,function(status){
-		  assert.equal(status,200);
+      assert.equal(status,200);
       done();
-		});
+    });
   })
   it('should fail as the credentials are wrong using archiveInPocket(consumer_key,access_token)', function(done){
     this.timeout(20000);
     pocket_api_helper.archiveInPocket("wrong","also_wrong",function(status){
-		  assert.notEqual(status,200);
+      assert.notEqual(status,200);
       done();
-		});
+    });
   })
 });
