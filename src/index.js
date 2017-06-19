@@ -131,7 +131,7 @@ if (create_ebook == 'true'){
 		if (send_ebook_to_kindle == 'smtp'){
 			calibre_helper.sendEbookToKindle(function (){
 				if (archive_in_pocket == 'true'){
-					pocket_api_helper.archiveInPocket();
+					pocket_api_helper.archiveInPocket(process.env.POCKET_API_CONSUMER_KEY,process.env.POCKET_API_ACCESS_TOKEN,null);
 				} else {
 					winston.log('info', {
 						"Ending process":new Date()
@@ -155,7 +155,7 @@ if (create_ebook == 'true'){
 				}
 				
 				if (archive_in_pocket == 'true'){
-					pocket_api_helper.archiveInPocket();
+					pocket_api_helper.archiveInPocket(process.env.POCKET_API_CONSUMER_KEY,process.env.POCKET_API_ACCESS_TOKEN,null);
 				} else {
 					winston.log('info', {
 						"Ending process":new Date()
