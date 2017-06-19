@@ -1,6 +1,6 @@
 # pocket2kindle
 
-[![Build Status](https://travis-ci.org/alvaroreig/pocket2kindle.svg?branch=master)](https://travis-ci.org/alvaroreig/pocket2kindle) [![Coverage Status](https://coveralls.io/repos/github/alvaroreig/pocket2kindle/badge.svg?branch=feature_proper_testing)](https://coveralls.io/github/alvaroreig/pocket2kindle?branch=feature_proper_testing)
+[![Build Status](https://travis-ci.org/alvaroreig/pocket2kindle.svg?branch=master)](https://travis-ci.org/alvaroreig/pocket2kindle) [![Coverage Status](https://coveralls.io/repos/github/alvaroreig/pocket2kindle/badge.svg?branch=master)](https://coveralls.io/github/alvaroreig/pocket2kindle?branch=master)
 
 Simple script that uses calibre to generate an ebook with the bookmarks stored in Pocket, sends it to the specified (kindle) email address and then archives all the sent bookmarks.
 
