@@ -13,7 +13,7 @@ if (process.env.LOG_LEVEL == 'debug'){
 }
 
 module.exports = {
-  archiveInPocket:function(){
+  archiveInPocket:function(consumer_key,access_token,callback){
 	/**
 	Get bookmark list from Pocket
 	*/
@@ -31,8 +31,8 @@ module.exports = {
 			"Accept" : "*/*"
 		},
 		body : {
-			consumer_key:process.env.POCKET_API_CONSUMER_KEY,
-			access_token:process.env.POCKET_API_ACCESS_TOKEN
+			consumer_key:consumer_key,
+			access_token:access_token
 		}
 	},function (err, httpResponse, body) {
 
@@ -41,7 +41,16 @@ module.exports = {
 				"Accesing Pocket Retrieve API": err,
 				"Ending process":new Date()
 			});
-			process.exit(1);
+			callback(-1);
+			//process.exit(1);
+		}
+		
+		if (httpResponse.statusCode != 200){
+			winston.log('info', {  
+				"Response different than 200": httpResponse.statusCode,
+				"Ending process":new Date()
+			});
+			callback(httpResponse.statusCode);
 		}
 
 		winston.log('info', {  
@@ -69,8 +78,8 @@ module.exports = {
 		})
 
 		var modify_api_json = {
-			consumer_key : process.env.POCKET_API_CONSUMER_KEY,
-			access_token : process.env.POCKET_API_ACCESS_TOKEN,
+			consumer_key : consumer_key,
+			access_token : access_token,
 			actions : bookmarks
 		};
 
@@ -102,13 +111,24 @@ module.exports = {
 					"Accesing Pocket Modify API": errModify,
 					"Ending process":new Date()
 				})
-				process.exit(1);
+				callback(-1)
+				//process.exit(1);
+			}
+			
+			if (httpResponse.statusCode != 200){
+				winston.log('info', {  
+					"Response different than 200": httpResponse.statusCode,
+					"Ending process":new Date()
+				});
+				callback(httpResponse.statusCode);
 			}
 
 			winston.log('info', {  
 				"Pocket bookmarks archived": "OK",
 				"Ending process":new Date()
 			});
+			
+			callback(200);
 		});
 	});
 }
