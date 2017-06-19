@@ -162,6 +162,10 @@ If you use any other service to access your favorite sites, just look for a simi
 
 ## Changelog
 
+### 1.3.2
+* Decoupling pocket_api_helper.js
+* Bumping coveralls integration to 35%
+
 ### 1.3.1
 * Mocha testing.
 * Coveralls integration (19% so far)
